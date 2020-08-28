@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Duke {
 
     public static void greet() {
@@ -7,6 +9,8 @@ public class Duke {
     public static void lineSeparator() {
         System.out.println("_________________________");
     }
+
+
 
     public static void goodbye() {
         System.out.println("Bye. Hope to see you again soon!");
@@ -23,6 +27,24 @@ public class Duke {
         lineSeparator();
         goodbye();
         lineSeparator();
+
+
+        while(true) {
+            Scanner input = new Scanner(System.in);
+
+            String echo = input.nextLine();
+            if(echo.equals("bye")){
+                break;
+            }
+            lineSeparator();
+            System.out.println(echo);
+            lineSeparator();
+        }
+
+
+        goodbye();
+
+
     }
 
 
