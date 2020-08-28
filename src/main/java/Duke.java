@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class Duke {
 
     public static void greet() {
@@ -28,6 +29,8 @@ public class Duke {
         goodbye();
         lineSeparator();
 
+        String[] storeUserText = new String[100];
+        int count = 0;
 
         while(true) {
             Scanner input = new Scanner(System.in);
@@ -36,9 +39,12 @@ public class Duke {
             if(echo.equals("bye")){
                 break;
             }
+
+            storeUserText[count] = echo;
             lineSeparator();
-            System.out.println(echo);
+            System.out.println("added: " + echo);
             lineSeparator();
+            count++;
         }
 
 
