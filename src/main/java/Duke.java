@@ -141,7 +141,7 @@ public class Duke {
     }
 
     public static void lineSeparator() {
-        System.out.println("_________________________");
+        System.out.println("____________________________________________________________");
     }
 
     public static void goodbye() {
