@@ -17,7 +17,8 @@ public class Duke {
         lineSeparator();
 
         boolean doExit = false;
-
+        System.out.println("testing new branch");
+        
         while (!doExit) {
             Scanner in = new Scanner(System.in);
             String userInput = in.nextLine();
