@@ -1,3 +1,5 @@
+package duke;
+
 import java.util.Scanner;
 
 
@@ -171,7 +173,7 @@ public class Duke {
     }
 
     public static void greet() {
-        System.out.println("Hello! I'm Duke\nWhat can I do for you?");
+        System.out.println("Hello! I'm duke.Duke\nWhat can I do for you?");
     }
 
     public static void lineSeparator() {

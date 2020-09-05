@@ -1,3 +1,5 @@
+package duke;
+
 public class Event extends Task {
     protected String at;
 
@@ -13,9 +15,5 @@ public class Event extends Task {
     public String type(){
         return "[E]";
     }
-//    @Override
-//    public String toString() {
-//        return "[E]" + super.toString() + " (at: " + at + ")";
-//    }
 }
 

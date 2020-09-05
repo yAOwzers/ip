@@ -1,3 +1,5 @@
+package duke;
+
 public class Todo extends Task {
     protected boolean isDone;
 
@@ -21,6 +23,4 @@ public class Todo extends Task {
     public String type(){
         return "[T]";
     }
-
-
 }
