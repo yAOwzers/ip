@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Duke {
     private static Task[] taskList = new Task[100];
     private static String[] storeUserText = new String[100];
+    private static boolean doExit = false;
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -16,14 +17,11 @@ public class Duke {
         greet();
         lineSeparator();
 
-        System.out.println("testing Master");
-        boolean doExit = false;
-        System.out.println("testing new branch");
-        
         while (!doExit) {
-            Scanner in = new Scanner(System.in);
-            String userInput = in.nextLine();
-            String[] userInputArray = userInput.split(" ");
+            String userInput = getInput();
+            try {
+
+                String[] userInputArray = checkInput(userInput);
 
             //firstWord will decide the actions that will be done
             String firstWord = userInputArray[0];
@@ -33,6 +31,7 @@ public class Duke {
                 lineSeparator();
                 break;
             }
+
             if (firstWord.equals("list")) {
                 list();
             }
@@ -52,9 +51,45 @@ public class Duke {
                 addTask(storeUserText, userInput);
             }
 
+            } catch (DukeException e){
+                errorMessage(userInput);
             }
-        goodbye();
+
+            }
+
         }
+
+    private static String getInput() {
+        Scanner in = new Scanner(System.in);
+        String userInput = in.nextLine();
+        return userInput;
+    }
+
+    private static String[] checkInput(String userInput) throws DukeException{
+        String[] checkUserInput = userInput.split(" ");
+        if(checkUserInput.length < 2) {
+            throw new DukeException();
+        }
+        return checkUserInput;
+    }
+
+    private static void errorMessage(String userInput) {
+        lineSeparator();
+        switch(userInput) {
+            case "todo":
+            case "deadline":
+            case "event":
+                System.out.println("☹ OOPS!!! The description of a " + userInput + " cannot be empty.");
+                break;
+            case "bye":
+                doExit = true;
+                goodbye();
+                break;
+            default:
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
+        lineSeparator();
+    }
 
     private static void markEvent(String userInput ){
         int dividePosAt = userInput.indexOf("/at");
