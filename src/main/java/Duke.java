@@ -16,6 +16,7 @@ public class Duke {
         greet();
         lineSeparator();
 
+        System.out.println("testing Master");
         boolean doExit = false;
         System.out.println("testing new branch");
         
