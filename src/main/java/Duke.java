@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Duke {
     private static Task[] taskList = new Task[100];
+    private static String[] storeUserText = new String[100];
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -15,7 +16,6 @@ public class Duke {
         greet();
         lineSeparator();
 
-        String[] storeUserText = new String[100];
         boolean doExit = false;
 
         while (!doExit) {
@@ -26,18 +26,14 @@ public class Duke {
             //firstWord will decide the actions that will be done
             String firstWord = userInputArray[0];
 
-            //exit
             if (firstWord.equals("bye")) {
                 doExit = true;
                 lineSeparator();
                 break;
             }
-
-            //List
             if (firstWord.equals("list")) {
                 list();
             }
-            //done
             else if (firstWord.equals("done")) {
                 markDone(userInputArray);
             }
@@ -53,10 +49,10 @@ public class Duke {
             else {
                 addTask(storeUserText, userInput);
             }
+
             }
         goodbye();
         }
-
 
     private static void markEvent(String userInput ){
         int dividePosAt = userInput.indexOf("/at");
@@ -85,12 +81,13 @@ public class Duke {
 
     public static void printAddMessage(Task newTask) {
         lineSeparator();
-        System.out.print("Got it. I've added this task:\n  ");
-        System.out.println(newTask.printTask());
+        System.out.print("Got it. I've added this task:\n  " + newTask.printTask());
 
+        //If there is only one task, then task will be singular
         if(newTask.numberOfTasks == 1) {
             System.out.println("Now you have " + newTask.numberOfTasks + " task in the list.");
-        } else {
+        }
+        else {
             System.out.println("Now you have " + newTask.numberOfTasks + " tasks in the list.");
         }
         lineSeparator();
@@ -147,6 +144,4 @@ public class Duke {
     public static void goodbye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
-
-
 }
