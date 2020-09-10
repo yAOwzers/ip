@@ -1,4 +1,6 @@
-public class Task {
+package task;
+
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected static int numberOfTasks = 0;
@@ -11,6 +13,10 @@ public class Task {
 
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
+    }
+
+    public static int getNumberOfTasks() {
+        return numberOfTasks;
     }
 
     public String printTask() {

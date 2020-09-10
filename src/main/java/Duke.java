@@ -1,3 +1,8 @@
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+
 import java.util.Scanner;
 
 
@@ -20,7 +25,6 @@ public class Duke {
         while (!doExit) {
             String userInput = getInput();
             try {
-
                 String[] userInputArray = checkInput(userInput);
 
             //firstWord will decide the actions that will be done
@@ -31,43 +35,39 @@ public class Duke {
                 lineSeparator();
                 break;
             }
-
-            if (firstWord.equals("list")) {
-                list();
-            }
-            else if (firstWord.equals("done")) {
-                markDone(userInputArray);
-            }
-            else if (firstWord.equals("todo")) {
-                markToDo(userInput);
-            }
-            else if (firstWord.equals("deadline")) {
-                markDeadline(userInput);
-            }
-            else if (firstWord.equals("event")) {
-                markEvent(userInput);
-            }
-            else {
-                addTask(storeUserText, userInput);
-            }
+                switch (firstWord) {
+                    case "list" -> list();
+                    case "done" -> markDone(userInputArray);
+                    case "todo" -> markToDo(userInput);
+                    case "deadline" -> markDeadline(userInput);
+                    case "event" -> markEvent(userInput);
+                    default -> addTask(storeUserText, userInput);
+                }
 
             } catch (DukeException e){
                 errorMessage(userInput);
+            } catch (NumberFormatException e) {
+                lineSeparator();
+                System.out.println("Number formatting Error!");
+                lineSeparator();
+            } catch (IndexOutOfBoundsException e) {
+                lineSeparator();
+                System.out.println("Index out of bounds exception!");
+                lineSeparator();
             }
 
-            }
+        }
 
         }
 
     private static String getInput() {
         Scanner in = new Scanner(System.in);
-        String userInput = in.nextLine();
-        return userInput;
+        return in.nextLine();
     }
 
     private static String[] checkInput(String userInput) throws DukeException{
         String[] checkUserInput = userInput.split(" ");
-        if(checkUserInput.length < 2) {
+        if(checkUserInput.length < 2 && !checkUserInput[0].equals("list")) {
             throw new DukeException();
         }
         return checkUserInput;
@@ -75,18 +75,14 @@ public class Duke {
 
     private static void errorMessage(String userInput) {
         lineSeparator();
-        switch(userInput) {
-            case "todo":
-            case "deadline":
-            case "event":
-                System.out.println("☹ OOPS!!! The description of a " + userInput + " cannot be empty.");
-                break;
-            case "bye":
+        switch (userInput) {
+            case "todo", "deadline", "event" ->
+                    System.out.println("☹ OOPS!!! The description of a " + userInput + " cannot be empty.");
+            case "bye" -> {
                 doExit = true;
                 goodbye();
-                break;
-            default:
-                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            }
+            default -> System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
         lineSeparator();
     }
@@ -96,7 +92,7 @@ public class Duke {
         String description = userInput.substring(0, dividePosAt).replace("event", "");
         String eventDate = userInput.substring((dividePosAt + 3), userInput.length());
         Task newTask = new Event(description.trim(), eventDate.trim());
-        taskList[Task.numberOfTasks - 1] = newTask;
+        taskList[Task.getNumberOfTasks() - 1] = newTask;
         printAddMessage(newTask);
     }
 
@@ -105,36 +101,36 @@ public class Duke {
         String description = userInput.substring(0, dividePosBy).replace("deadline", "");
         String deadlineDate = userInput.substring((dividePosBy + 3), userInput.length());
         Task newTask = new Deadline(description.trim(), deadlineDate.trim());
-        taskList[Task.numberOfTasks - 1] = newTask;
+        taskList[Task.getNumberOfTasks() - 1] = newTask;
         printAddMessage(newTask);
     }
 
     private static void markToDo(String userInput){
         String description = userInput.replace("todo", "");
         Task newTask = new Todo(description.trim());
-        taskList[Task.numberOfTasks - 1] = newTask;
+        taskList[Task.getNumberOfTasks() - 1] = newTask;
         printAddMessage(newTask);
     }
 
     public static void printAddMessage(Task newTask) {
         lineSeparator();
-        System.out.print("Got it. I've added this task:\n  " + newTask.printTask());
+        System.out.println("Got it. I've added this task:\n  " + newTask.printTask());
 
         //If there is only one task, then task will be singular
-        if(newTask.numberOfTasks == 1) {
-            System.out.println("Now you have " + newTask.numberOfTasks + " task in the list.");
+        if(newTask.getNumberOfTasks() == 1) {
+            System.out.println("Now you have " + newTask.getNumberOfTasks() + " task in the list.");
         }
         else {
-            System.out.println("Now you have " + newTask.numberOfTasks + " tasks in the list.");
+            System.out.println("Now you have " + newTask.getNumberOfTasks() + " tasks in the list.");
         }
         lineSeparator();
     }
 
     private static void addTask(String[] storeUserText, String userInput) {
-        storeUserText[Task.numberOfTasks] = userInput;
+        storeUserText[Task.getNumberOfTasks()] = userInput;
         echo(userInput);
-        Task addTask = new Task(userInput);
-        taskList[Task.numberOfTasks] = addTask;
+        Task addTask = new Todo(userInput);
+        taskList[Task.getNumberOfTasks()] = addTask;
     }
 
     private static void echo(String userInput) {
@@ -158,12 +154,10 @@ public class Duke {
         lineSeparator();
     }
 
-
-
     private static void list() {
         lineSeparator();
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < Task.numberOfTasks; i++) {
+        for (int i = 0; i < Task.getNumberOfTasks(); i++) {
             System.out.print((i + 1) + ". ");
             System.out.println(taskList[i].printTask());
         }
