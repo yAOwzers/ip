@@ -4,10 +4,11 @@ import task.Task;
 import task.Todo;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 public class Duke {
-    private static Task[] taskList = new Task[100];
+    private static ArrayList<Task> taskList = new ArrayList<>();
     private static String[] storeUserText = new String[100];
     private static boolean doExit = false;
 
@@ -41,6 +42,7 @@ public class Duke {
                     case "todo" -> markToDo(userInput);
                     case "deadline" -> markDeadline(userInput);
                     case "event" -> markEvent(userInput);
+                    case "delete" -> deleteTask(userInputArray);
                     default -> addTask(storeUserText, userInput);
                 }
 
@@ -55,9 +57,7 @@ public class Duke {
                 System.out.println("Index out of bounds exception!");
                 lineSeparator();
             }
-
         }
-
         }
 
     private static String getInput() {
@@ -87,12 +87,22 @@ public class Duke {
         lineSeparator();
     }
 
+    private static void deleteTask(String[] userInputArray) {
+        int indexOfDeletedTask;
+
+        indexOfDeletedTask = Integer.parseInt(userInputArray[1]) - 1;
+        Task.decremenetNumberOfTask();
+        System.out.println("Noted. I've removed this task:\n" + "  " + taskList.get(indexOfDeletedTask).printTask());
+        taskList.remove(indexOfDeletedTask);
+        getNumberOfTaskMessage();
+    }
+
     private static void markEvent(String userInput ){
         int dividePosAt = userInput.indexOf("/at");
         String description = userInput.substring(0, dividePosAt).replace("event", "");
         String eventDate = userInput.substring((dividePosAt + 3), userInput.length());
         Task newTask = new Event(description.trim(), eventDate.trim());
-        taskList[Task.getNumberOfTasks() - 1] = newTask;
+        taskList.add(newTask);
         printAddMessage(newTask);
     }
 
@@ -101,14 +111,14 @@ public class Duke {
         String description = userInput.substring(0, dividePosBy).replace("deadline", "");
         String deadlineDate = userInput.substring((dividePosBy + 3), userInput.length());
         Task newTask = new Deadline(description.trim(), deadlineDate.trim());
-        taskList[Task.getNumberOfTasks() - 1] = newTask;
+        taskList.add(newTask);
         printAddMessage(newTask);
     }
 
     private static void markToDo(String userInput){
         String description = userInput.replace("todo", "");
         Task newTask = new Todo(description.trim());
-        taskList[Task.getNumberOfTasks() - 1] = newTask;
+        taskList.add(newTask);
         printAddMessage(newTask);
     }
 
@@ -116,12 +126,16 @@ public class Duke {
         lineSeparator();
         System.out.println("Got it. I've added this task:\n  " + newTask.printTask());
 
+        getNumberOfTaskMessage();
+    }
+
+    private static void getNumberOfTaskMessage() {
         //If there is only one task, then task will be singular
-        if(newTask.getNumberOfTasks() == 1) {
-            System.out.println("Now you have " + newTask.getNumberOfTasks() + " task in the list.");
+        if(Task.getNumberOfTasks() == 1) {
+            System.out.println("Now you have " + Task.getNumberOfTasks() + " task in the list.");
         }
         else {
-            System.out.println("Now you have " + newTask.getNumberOfTasks() + " tasks in the list.");
+            System.out.println("Now you have " + Task.getNumberOfTasks() + " tasks in the list.");
         }
         lineSeparator();
     }
@@ -130,7 +144,7 @@ public class Duke {
         storeUserText[Task.getNumberOfTasks()] = userInput;
         echo(userInput);
         Task addTask = new Todo(userInput);
-        taskList[Task.getNumberOfTasks()] = addTask;
+        taskList.add(addTask);
     }
 
     private static void echo(String userInput) {
@@ -149,8 +163,8 @@ public class Duke {
         //due to zero indexing, we need to correct the index by deducting 1
         //eg. "done 2", index of the task in the array is 1, and NOT 2.
         int indexOfDoneTask = Integer.parseInt(userInputArray[1]) - 1;
-        taskList[indexOfDoneTask].markAsDone();
-        System.out.println("Nice! I've marked this task as done:\n" + taskList[indexOfDoneTask].printTask());
+        taskList.get(indexOfDoneTask).markAsDone();
+        System.out.println("Nice! I've marked this task as done:\n" + taskList.get(indexOfDoneTask).printTask());
         lineSeparator();
     }
 
@@ -159,7 +173,7 @@ public class Duke {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < Task.getNumberOfTasks(); i++) {
             System.out.print((i + 1) + ". ");
-            System.out.println(taskList[i].printTask());
+            System.out.println(taskList.get(i).printTask());
         }
         lineSeparator();
     }
