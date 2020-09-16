@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import static file.FileReader.printFileContents;
-import static file.FileReader.writeToFile;
+import static file.FileReader.appendToFile;
 
 
 public class Duke {
@@ -18,6 +18,7 @@ public class Duke {
     private static String[] storeUserText = new String[100];
     private static boolean doExit = false;
     private static String fileName = "data.txt";
+    private static boolean toAppend = false;
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -64,16 +65,19 @@ public class Duke {
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
+
+            toAppend = true;
         }
         }
 
     private static void loadFile() {
         try {
+            System.out.println("Loaded from previous tasklist:");
             printFileContents("data.txt"); //file path to be changed
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            lineSeparator();
         }
+        lineSeparator();
     }
 
     private static void exceptionErrorMessage(String s) {
@@ -127,7 +131,7 @@ public class Duke {
         Task newTask = new Event(description.trim(), eventDate.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
-        writeToFile(fileName, newTask.toString());
+        appendToFile(fileName, newTask.toString(), toAppend);
     }
 
     private static void markDeadline(String userInput) throws IOException {
@@ -137,7 +141,7 @@ public class Duke {
         Task newTask = new Deadline(description.trim(), deadlineDate.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
-        writeToFile(fileName, newTask.toString());
+        appendToFile(fileName, newTask.toString(), toAppend);
     }
 
     private static void markToDo(String userInput) throws IOException {
@@ -145,7 +149,7 @@ public class Duke {
         Task newTask = new Todo(description.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
-        writeToFile(fileName, newTask.toString());
+        appendToFile(fileName, newTask.toString(), toAppend);
     }
 
     public static void printAddMessage(Task newTask) {
@@ -180,7 +184,7 @@ public class Duke {
         lineSeparator();
     }
 
-    private static void markDone(String[] userInputArray) {
+    private static void markDone(String[] userInputArray) throws IOException {
         //check if it is a valid input eg. "done 2" and NOT "done"
         if (userInputArray.length < 2) {
             System.out.println("Invalid input!");
@@ -194,6 +198,13 @@ public class Duke {
         taskList.get(indexOfDoneTask).markAsDone();
         System.out.println("Nice! I've marked this task as done:\n" + taskList.get(indexOfDoneTask).printTask());
         lineSeparator();
+
+        toAppend = false; // overwrites
+        //method to save all
+        for( Task task: taskList) {
+            appendToFile(fileName, task.toString(), toAppend);
+            toAppend = true;
+        }
     }
 
     private static void list() {

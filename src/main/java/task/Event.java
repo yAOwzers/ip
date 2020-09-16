@@ -18,8 +18,8 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return getType() + "|" + super.printStatus()
-                + "|" + description + " (at: " + at + ")";
+        return getType() + super.printStatus()
+                + description + " (at: " + at + ")" + System.lineSeparator();
     }
 }
 

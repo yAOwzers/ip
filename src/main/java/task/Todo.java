@@ -26,7 +26,7 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
-        return getType() + "|" + super.printStatus()
-                + "|" + description;
+        return getType() + super.printStatus()
+                + description + System.lineSeparator();
     }
 }

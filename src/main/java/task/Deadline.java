@@ -18,8 +18,8 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return getType() + "|" + super.printStatus()
-                + "|" + description + " (by: " + by + ")";
+        return getType() + super.printStatus()
+                + description + " (by: " + by + ")" + System.lineSeparator();
     }
 }
 
