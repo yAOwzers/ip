@@ -31,6 +31,18 @@ public abstract class Task {
     public void markAsDone() {
         this.isDone = true;
     }
+
+    public static String getType() {
+        return "";
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "description='" + description + '\'' +
+                ", isDone=" + isDone +
+                '}';
+    }
 }
 
 

@@ -9,15 +9,17 @@ public class Event extends Task {
     }
 
     public String printTask() {
-        return type() + super.printStatus() + " " + description + " (at: " + at + ")";
+        return getType() + super.printStatus() + " " + description + " (at: " + at + ")";
     }
 
-    public String type(){
+    public static String getType(){
         return "[E]";
     }
-//    @Override
-//    public String toString() {
-//        return "[E]" + super.toString() + " (at: " + at + ")";
-//    }
+
+    @Override
+    public String toString() {
+        return getType() + "|" + super.printStatus()
+                + "|" + description + " (at: " + at + ")";
+    }
 }
 
