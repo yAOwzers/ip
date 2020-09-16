@@ -32,8 +32,22 @@ public abstract class Task {
         this.isDone = true;
     }
 
+
     public static void decremenetNumberOfTask() {
         numberOfTasks--;
+    }
+
+    public static String getType() {
+        return "";
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "description='" + description + '\'' +
+                ", isDone=" + isDone +
+                '}';
+
     }
 }
 

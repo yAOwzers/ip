@@ -1,16 +1,23 @@
+import exceptions.DukeException;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import static file.FileReader.printFileContents;
+import static file.FileReader.writeToFile;
 
 
 public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static String[] storeUserText = new String[100];
     private static boolean doExit = false;
+    private static String fileName = "data.txt";
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -22,9 +29,11 @@ public class Duke {
         lineSeparator();
         greet();
         lineSeparator();
+        loadFile();
 
         while (!doExit) {
             String userInput = getInput();
+
             try {
                 String[] userInputArray = checkInput(userInput);
 
@@ -49,16 +58,29 @@ public class Duke {
             } catch (DukeException e){
                 errorMessage(userInput);
             } catch (NumberFormatException e) {
-                lineSeparator();
-                System.out.println("Number formatting Error!");
-                lineSeparator();
+                exceptionErrorMessage("Number formatting Error!");
             } catch (IndexOutOfBoundsException e) {
-                lineSeparator();
-                System.out.println("Index out of bounds exception!");
-                lineSeparator();
+                exceptionErrorMessage("Index out of bounds exception!");
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
             }
         }
         }
+
+    private static void loadFile() {
+        try {
+            printFileContents("data.txt"); //file path to be changed
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            lineSeparator();
+        }
+    }
+
+    private static void exceptionErrorMessage(String s) {
+        lineSeparator();
+        System.out.println(s);
+        lineSeparator();
+    }
 
     private static String getInput() {
         Scanner in = new Scanner(System.in);
@@ -97,29 +119,33 @@ public class Duke {
         getNumberOfTaskMessage();
     }
 
-    private static void markEvent(String userInput ){
+
+    private static void markEvent(String userInput ) throws IOException {
         int dividePosAt = userInput.indexOf("/at");
         String description = userInput.substring(0, dividePosAt).replace("event", "");
         String eventDate = userInput.substring((dividePosAt + 3), userInput.length());
         Task newTask = new Event(description.trim(), eventDate.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
+        writeToFile(fileName, newTask.toString());
     }
 
-    private static void markDeadline(String userInput){
+    private static void markDeadline(String userInput) throws IOException {
         int dividePosBy = userInput.indexOf("/by");
         String description = userInput.substring(0, dividePosBy).replace("deadline", "");
         String deadlineDate = userInput.substring((dividePosBy + 3), userInput.length());
         Task newTask = new Deadline(description.trim(), deadlineDate.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
+        writeToFile(fileName, newTask.toString());
     }
 
-    private static void markToDo(String userInput){
+    private static void markToDo(String userInput) throws IOException {
         String description = userInput.replace("todo", "");
         Task newTask = new Todo(description.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
+        writeToFile(fileName, newTask.toString());
     }
 
     public static void printAddMessage(Task newTask) {
@@ -163,6 +189,8 @@ public class Duke {
         //due to zero indexing, we need to correct the index by deducting 1
         //eg. "done 2", index of the task in the array is 1, and NOT 2.
         int indexOfDoneTask = Integer.parseInt(userInputArray[1]) - 1;
+        // have a method to save all **
+
         taskList.get(indexOfDoneTask).markAsDone();
         System.out.println("Nice! I've marked this task as done:\n" + taskList.get(indexOfDoneTask).printTask());
         lineSeparator();
