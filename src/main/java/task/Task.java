@@ -41,6 +41,13 @@ public abstract class Task {
         return "";
     }
 
+    public int isDoneIntegar() {
+        if(isDone == true) {
+            return 1;
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "Task{" +

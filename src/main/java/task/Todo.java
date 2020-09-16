@@ -17,16 +17,16 @@ public class Todo extends Task {
     }
 
     public String printTask() {
-        return getType() + super.printStatus() + " " + description;
+        return "[" + getType() + "]" + super.printStatus() + " " + description;
     }
 
     public static String getType(){
-        return "[T]";
+        return "T";
     }
 
     @Override
     public String toString() {
-        return getType() + super.printStatus()
+        return getType() + "|" + super.isDoneIntegar() + "|"
                 + description + System.lineSeparator();
     }
 }

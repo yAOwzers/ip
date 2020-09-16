@@ -9,17 +9,17 @@ public class Event extends Task {
     }
 
     public String printTask() {
-        return getType() + super.printStatus() + " " + description + " (at: " + at + ")";
+        return "[" + getType() + "]" + super.printStatus() + " " + description + " (at: " + at + ")";
     }
 
     public static String getType(){
-        return "[E]";
+        return "E";
     }
 
     @Override
     public String toString() {
-        return getType() + super.printStatus()
-                + description + " (at: " + at + ")" + System.lineSeparator();
+        return getType() + "|" + super.isDoneIntegar() + "|"
+                + description + "|" + at + System.lineSeparator();
     }
 }
 

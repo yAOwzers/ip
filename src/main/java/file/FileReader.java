@@ -8,12 +8,14 @@ import java.util.Scanner;
 
 
 public class FileReader {
-    public static void printFileContents(String filePath) throws FileNotFoundException {
+    public static String printFileContents(String filePath) throws FileNotFoundException {
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        String output = "";
         while (s.hasNext()) {
-            System.out.println(s.nextLine());
+          output = output.concat(s.nextLine()) + "\n";
         }
+        return output;
     }
 
     public static void appendToFile(String filePath, String textToAdd, boolean toAppend) throws IOException {

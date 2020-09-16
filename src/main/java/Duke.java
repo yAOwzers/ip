@@ -15,9 +15,8 @@ import static file.FileReader.appendToFile;
 
 public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
-    private static String[] storeUserText = new String[100];
     private static boolean doExit = false;
-    private static String fileName = "data.txt";
+    private static final String filePath = "data.txt";
     private static boolean toAppend = false;
 
     public static void main(String[] args) {
@@ -38,23 +37,38 @@ public class Duke {
             try {
                 String[] userInputArray = checkInput(userInput);
 
-            //firstWord will decide the actions that will be done
-            String firstWord = userInputArray[0];
+                //firstWord will decide the actions that will be done
+                String firstWord = userInputArray[0];
 
-            if (firstWord.equals("bye")) {
-                doExit = true;
-                lineSeparator();
-                break;
-            }
-                switch (firstWord) {
-                    case "list" -> list();
-                    case "done" -> markDone(userInputArray);
-                    case "todo" -> markToDo(userInput);
-                    case "deadline" -> markDeadline(userInput);
-                    case "event" -> markEvent(userInput);
-                    case "delete" -> deleteTask(userInputArray);
-                    default -> addTask(storeUserText, userInput);
+                if (firstWord.equals("bye")) {
+                    doExit = true;
+                    lineSeparator();
+                    break;
                 }
+                    switch (firstWord) {
+                        case "list":
+                            list();
+                            break;
+                        case "done":
+                            markDone(userInputArray);
+                            break;
+                        case "todo":
+                            markToDo(userInput);
+                            break;
+                        case "deadline":
+                            markDeadline(userInput);
+                            break;
+                        case "event":
+                            markEvent(userInput);
+                            break;
+                        case "delete":
+                            deleteTask(userInputArray);
+                            break;
+                        default:
+                            lineSeparator();
+                            System.out.println("Sorry that is an invalid Command ! :(");
+                            lineSeparator();
+                    }
 
             } catch (DukeException e){
                 errorMessage(userInput);
@@ -72,12 +86,77 @@ public class Duke {
 
     private static void loadFile() {
         try {
-            System.out.println("Loaded from previous tasklist:");
-            printFileContents("data.txt"); //file path to be changed
+            String output;
+            System.out.println("Loaded from previous task list:");
+            output = printFileContents("data.txt");
+            toAppend = true; // if there is an existing file
+
+            String[] prevList;
+            prevList = output.split("\n");
+
+            for(String task : prevList) {
+                String taskType = task.substring(0,1); // gets the first character
+                int isDoneInteger = Integer.parseInt(task.substring(2,3));
+                switch (taskType) {
+                    case "T":
+                        inputTodo(task, isDoneInteger);
+                        break;
+                    case "E":
+                        inputEvent(task, isDoneInteger);
+                        break;
+                    case "D":
+                        inputDeadline(task, isDoneInteger);
+                        break;
+                }
+            }
+            printTaskList();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
         lineSeparator();
+    }
+
+    private static void printTaskList() {
+        for (int i = 0; i < Task.getNumberOfTasks(); i++) {
+            System.out.print((i + 1) + ". ");
+            System.out.println(taskList.get(i).printTask());
+        }
+    }
+
+    private static void inputDeadline(String task, int isDoneInteger) {
+        int indexOfSecondBar = 4;
+        String taskDescriptionAndDate = task.substring(indexOfSecondBar);
+        int indexOfThirdBar = taskDescriptionAndDate.indexOf("|");
+        String deadlineDate = taskDescriptionAndDate.substring(indexOfThirdBar + 1);
+        String taskDescription = taskDescriptionAndDate.substring(0, indexOfThirdBar);
+        Task newTask = new Deadline(taskDescription, deadlineDate);
+        taskList.add(newTask);
+        if(isDoneInteger == 1) {
+            newTask.markAsDone();
+        }
+    }
+
+    private static void inputEvent(String task, int isDoneInteger) {
+        int indexOfSecondBar = 4;
+        String taskDescriptionAndDate = task.substring(indexOfSecondBar);
+        int indexOfThirdBar = taskDescriptionAndDate.indexOf("|");
+        String eventDate = taskDescriptionAndDate.substring(indexOfThirdBar + 1);
+        String taskDescription = taskDescriptionAndDate.substring(0, indexOfThirdBar);
+        Task newTask = new Event(taskDescription, eventDate);
+        taskList.add(newTask);
+        if(isDoneInteger == 1) {
+            newTask.markAsDone();
+        }
+    }
+
+    private static void inputTodo(String task, int isDoneInteger) {
+        int indexOfSecondBar = 4;
+        String taskDescription = task.substring(indexOfSecondBar);
+        Task newTask = new Todo(taskDescription);
+        taskList.add(newTask);
+        if(isDoneInteger == 1) {
+            newTask.markAsDone();
+        }
     }
 
     private static void exceptionErrorMessage(String s) {
@@ -102,18 +181,24 @@ public class Duke {
     private static void errorMessage(String userInput) {
         lineSeparator();
         switch (userInput) {
-            case "todo", "deadline", "event" ->
+            case "todo":
+            case "deadline":
+            case "event":
                     System.out.println("☹ OOPS!!! The description of a " + userInput + " cannot be empty.");
-            case "bye" -> {
+                    break;
+            case "bye":
                 doExit = true;
                 goodbye();
-            }
-            default -> System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                break;
+            default:
+                lineSeparator();
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                lineSeparator();
         }
         lineSeparator();
     }
 
-    private static void deleteTask(String[] userInputArray) {
+    private static void deleteTask(String[] userInputArray) throws IOException {
         int indexOfDeletedTask;
 
         indexOfDeletedTask = Integer.parseInt(userInputArray[1]) - 1;
@@ -121,27 +206,38 @@ public class Duke {
         System.out.println("Noted. I've removed this task:\n" + "  " + taskList.get(indexOfDeletedTask).printTask());
         taskList.remove(indexOfDeletedTask);
         getNumberOfTaskMessage();
+
+        overwritesFile();
+    }
+
+    private static void overwritesFile() throws IOException {
+        toAppend = false; // overwrites
+        //method to save all
+        for (int i = 0; i < Task.getNumberOfTasks(); i++) {
+            appendToFile(filePath, taskList.get(i).toString(), toAppend);
+            toAppend = true;
+        }
     }
 
 
     private static void markEvent(String userInput ) throws IOException {
         int dividePosAt = userInput.indexOf("/at");
         String description = userInput.substring(0, dividePosAt).replace("event", "");
-        String eventDate = userInput.substring((dividePosAt + 3), userInput.length());
+        String eventDate = userInput.substring(dividePosAt + 3);
         Task newTask = new Event(description.trim(), eventDate.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
-        appendToFile(fileName, newTask.toString(), toAppend);
+        appendToFile(filePath, newTask.toString(), toAppend);
     }
 
     private static void markDeadline(String userInput) throws IOException {
         int dividePosBy = userInput.indexOf("/by");
         String description = userInput.substring(0, dividePosBy).replace("deadline", "");
-        String deadlineDate = userInput.substring((dividePosBy + 3), userInput.length());
+        String deadlineDate = userInput.substring(dividePosBy + 3);
         Task newTask = new Deadline(description.trim(), deadlineDate.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
-        appendToFile(fileName, newTask.toString(), toAppend);
+        appendToFile(filePath, newTask.toString(), toAppend);
     }
 
     private static void markToDo(String userInput) throws IOException {
@@ -149,7 +245,7 @@ public class Duke {
         Task newTask = new Todo(description.trim());
         taskList.add(newTask);
         printAddMessage(newTask);
-        appendToFile(fileName, newTask.toString(), toAppend);
+        appendToFile(filePath, newTask.toString(), toAppend);
     }
 
     public static void printAddMessage(Task newTask) {
@@ -170,21 +266,8 @@ public class Duke {
         lineSeparator();
     }
 
-    private static void addTask(String[] storeUserText, String userInput) {
-        storeUserText[Task.getNumberOfTasks()] = userInput;
-        echo(userInput);
-        Task addTask = new Todo(userInput);
-        taskList.add(addTask);
-    }
-
-    private static void echo(String userInput) {
-        //user reply
-        lineSeparator();
-        System.out.println("added: " + userInput);
-        lineSeparator();
-    }
-
     private static void markDone(String[] userInputArray) throws IOException {
+        lineSeparator();
         //check if it is a valid input eg. "done 2" and NOT "done"
         if (userInputArray.length < 2) {
             System.out.println("Invalid input!");
@@ -199,21 +282,13 @@ public class Duke {
         System.out.println("Nice! I've marked this task as done:\n" + taskList.get(indexOfDoneTask).printTask());
         lineSeparator();
 
-        toAppend = false; // overwrites
-        //method to save all
-        for( Task task: taskList) {
-            appendToFile(fileName, task.toString(), toAppend);
-            toAppend = true;
-        }
+        overwritesFile();
     }
 
     private static void list() {
         lineSeparator();
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < Task.getNumberOfTasks(); i++) {
-            System.out.print((i + 1) + ". ");
-            System.out.println(taskList.get(i).printTask());
-        }
+        printTaskList();
         lineSeparator();
     }
 

@@ -9,17 +9,18 @@ public class Deadline extends Task {
     }
 
     public String printTask() {
-        return getType() + super.printStatus() + " " + description + " (by: " + by + ")";
+        return "[" + getType() + "]" + super.printStatus() + " " + description + " (by: " + by + ")";
     }
 
     public static String getType(){
-        return "[D]";
+        return "D";
     }
+
 
     @Override
     public String toString() {
-        return getType() + super.printStatus()
-                + description + " (by: " + by + ")" + System.lineSeparator();
+        return getType() + "|" + super.isDoneIntegar() + "|"
+                + description + "|" + by + System.lineSeparator();
     }
 }
 

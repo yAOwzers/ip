@@ -1,3 +1,5 @@
-[T][✘]project
-[T][✓]task
-[T][✘]ebent
+T|1|event
+T|1|project
+E|1|deadline|8pm mon
+D|0|must do|8pm monday
+E|0|help|9pm mon
