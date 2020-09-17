@@ -96,7 +96,7 @@ public class Duke {
 
             for(String task : prevList) {
                 String taskType = task.substring(0,1); // gets the first character
-                int isDoneInteger = Integer.parseInt(task.substring(2,3));
+                String isDoneInteger = task.substring(2,3);
                 switch (taskType) {
                     case "T":
                         inputTodo(task, isDoneInteger);
@@ -123,38 +123,38 @@ public class Duke {
         }
     }
 
-    private static void inputDeadline(String task, int isDoneInteger) {
-        int indexOfSecondBar = 4;
-        String taskDescriptionAndDate = task.substring(indexOfSecondBar);
+    private static void inputDeadline(String task, String isDoneInteger) {
+        int indexOfSecondBar = 3;
+        String taskDescriptionAndDate = task.substring(indexOfSecondBar + 1);
         int indexOfThirdBar = taskDescriptionAndDate.indexOf("|");
         String deadlineDate = taskDescriptionAndDate.substring(indexOfThirdBar + 1);
         String taskDescription = taskDescriptionAndDate.substring(0, indexOfThirdBar);
         Task newTask = new Deadline(taskDescription, deadlineDate);
         taskList.add(newTask);
-        if(isDoneInteger == 1) {
+        if(isDoneInteger.equals("1")) {
             newTask.markAsDone();
         }
     }
 
-    private static void inputEvent(String task, int isDoneInteger) {
-        int indexOfSecondBar = 4;
-        String taskDescriptionAndDate = task.substring(indexOfSecondBar);
+    private static void inputEvent(String task, String isDoneInteger) {
+        int indexOfSecondBar = 3;
+        String taskDescriptionAndDate = task.substring(indexOfSecondBar + 1);
         int indexOfThirdBar = taskDescriptionAndDate.indexOf("|");
         String eventDate = taskDescriptionAndDate.substring(indexOfThirdBar + 1);
         String taskDescription = taskDescriptionAndDate.substring(0, indexOfThirdBar);
         Task newTask = new Event(taskDescription, eventDate);
         taskList.add(newTask);
-        if(isDoneInteger == 1) {
+        if(isDoneInteger.equals("1")) {
             newTask.markAsDone();
         }
     }
 
-    private static void inputTodo(String task, int isDoneInteger) {
-        int indexOfSecondBar = 4;
-        String taskDescription = task.substring(indexOfSecondBar);
+    private static void inputTodo(String task, String isDoneInteger) {
+        int indexOfSecondBar = 3;
+        String taskDescription = task.substring(indexOfSecondBar + 1);
         Task newTask = new Todo(taskDescription);
         taskList.add(newTask);
-        if(isDoneInteger == 1) {
+        if(isDoneInteger.equals("1")) {
             newTask.markAsDone();
         }
     }
@@ -202,7 +202,7 @@ public class Duke {
         int indexOfDeletedTask;
 
         indexOfDeletedTask = Integer.parseInt(userInputArray[1]) - 1;
-        Task.decremenetNumberOfTask();
+        Task.decrementNumberOfTask();
         System.out.println("Noted. I've removed this task:\n" + "  " + taskList.get(indexOfDeletedTask).printTask());
         taskList.remove(indexOfDeletedTask);
         getNumberOfTaskMessage();

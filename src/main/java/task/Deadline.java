@@ -19,7 +19,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return getType() + "|" + super.isDoneIntegar() + "|"
+        return getType() + "|" + super.isDoneInteger() + "|"
                 + description + "|" + by + System.lineSeparator();
     }
 }

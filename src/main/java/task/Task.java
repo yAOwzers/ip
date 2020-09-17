@@ -33,7 +33,7 @@ public abstract class Task {
     }
 
 
-    public static void decremenetNumberOfTask() {
+    public static void decrementNumberOfTask() {
         numberOfTasks--;
     }
 
@@ -41,8 +41,8 @@ public abstract class Task {
         return "";
     }
 
-    public int isDoneIntegar() {
-        if(isDone == true) {
+    public int isDoneInteger() {
+        if(isDone) {
             return 1;
         }
         return 0;

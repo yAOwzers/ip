@@ -18,7 +18,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return getType() + "|" + super.isDoneIntegar() + "|"
+        return getType() + "|" + super.isDoneInteger() + "|"
                 + description + "|" + at + System.lineSeparator();
     }
 }
