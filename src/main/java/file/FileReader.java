@@ -20,9 +20,8 @@ public class FileReader {
 
     public static void appendToFile(String filePath, String textToAdd, boolean toAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, toAppend);
-        fw.write(textToAdd); //** task.toString
+        fw.write(textToAdd);
         fw.close(); // need to call the close() method of the FileWriter object for the writing operation to be completed.
     }
 
-//    public static void saveAll(String filePath, TaskList<Task> taskList) {}
 }

@@ -29,6 +29,7 @@ public class Duke {
         lineSeparator();
         greet();
         lineSeparator();
+
         loadFile();
 
         while (!doExit) {
@@ -184,8 +185,9 @@ public class Duke {
             case "todo":
             case "deadline":
             case "event":
-                    System.out.println("☹ OOPS!!! The description of a " + userInput + " cannot be empty.");
-                    break;
+                System.out.println("☹ OOPS!!! The description of a "
+                        + userInput + " cannot be empty.");
+                break;
             case "bye":
                 doExit = true;
                 goodbye();
@@ -203,7 +205,8 @@ public class Duke {
 
         indexOfDeletedTask = Integer.parseInt(userInputArray[1]) - 1;
         Task.decrementNumberOfTask();
-        System.out.println("Noted. I've removed this task:\n" + "  " + taskList.get(indexOfDeletedTask).printTask());
+        System.out.println("Noted. I've removed this task:\n" + "  "
+                + taskList.get(indexOfDeletedTask).printTask());
         taskList.remove(indexOfDeletedTask);
         getNumberOfTaskMessage();
 
@@ -279,7 +282,8 @@ public class Duke {
         // have a method to save all **
 
         taskList.get(indexOfDoneTask).markAsDone();
-        System.out.println("Nice! I've marked this task as done:\n" + taskList.get(indexOfDoneTask).printTask());
+        System.out.println("Nice! I've marked this task as done:\n"
+                + taskList.get(indexOfDoneTask).printTask());
         lineSeparator();
 
         overwritesFile();

@@ -17,7 +17,8 @@ public class Todo extends Task {
     }
 
     public String printTask() {
-        return "[" + getType() + "]" + super.printStatus() + " " + description;
+        return "[" + getType() + "]"
+                + super.printStatus() + " " + description;
     }
 
     public static String getType(){

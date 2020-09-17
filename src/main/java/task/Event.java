@@ -9,7 +9,8 @@ public class Event extends Task {
     }
 
     public String printTask() {
-        return "[" + getType() + "]" + super.printStatus() + " " + description + " (at: " + at + ")";
+        return "[" + getType() + "]" + super.printStatus()
+                + " " + description + " (at: " + at + ")";
     }
 
     public static String getType(){
