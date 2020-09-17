@@ -193,9 +193,7 @@ public class Duke {
                 goodbye();
                 break;
             default:
-                lineSeparator();
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-                lineSeparator();
         }
         lineSeparator();
     }
