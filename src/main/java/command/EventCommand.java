@@ -32,7 +32,9 @@ public class EventCommand extends CreateTaskCommand {
             checkFollowUpCommand(userInputWithoutCommandArr, "/at");
             String followUpCommand = Parser.parseFollowUpCommand(userInputWithoutCommandArr[1]);
             if (followUpCommand.equals("at")) {
-                String dateTime = userInputWithoutCommand.substring(3);
+//                String dateTime = userInputWithoutCommand.substring(3);
+                int indexOfDateTime = userInputWithoutCommand.indexOf("/");
+                String dateTime = userInputWithoutCommand.substring(indexOfDateTime + 3).trim();
 //                checkDateTime(userInputWithoutCommandArr[1], "event");
 //                String dateTime = userInputWithoutCommandArr[1]
 //                        .substring(userInputWithoutCommandArr[1].indexOf(" ")).trim();

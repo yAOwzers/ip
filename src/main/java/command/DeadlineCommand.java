@@ -34,7 +34,11 @@ public class DeadlineCommand extends CreateTaskCommand {
             checkFollowUpCommand(userInputWithoutCommandArr, "/by");
             String followUpCommand = Parser.parseFollowUpCommand(userInputWithoutCommandArr[1]);
             if (followUpCommand.equals("by")) {
-                String dateTime = userInputWithoutCommand.substring(3);
+//                String dateTime = userInputWithoutCommand.substring(3);
+                int indexOfDateTime = userInputWithoutCommand.indexOf("/");
+                String dateTime = userInputWithoutCommand.substring(indexOfDateTime + 3).trim();
+//                int indexOfDateTime = userInputWithoutCommand.indexOf("/");
+//                String dateTime = userInputWithoutCommand.substring(indexOfDateTime + 2).trim();
 //                checkDateTime(userInputWithoutCommandArr[1], "deadline");
 //                String dateTime = userInputWithoutCommandArr[1]
 //                        .substring(userInputWithoutCommandArr[1].indexOf(" ")).trim();

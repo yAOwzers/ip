@@ -9,12 +9,15 @@ public abstract class Task {
     protected String description;
     protected String[] descriptionArray;
     protected boolean isDone;
-    protected static int numberOfTasks = 0;
 
     public Task(String description) {
         this.description = description;
+        this.descriptionArray = description.split(" ");
         this.isDone = false;
-        numberOfTasks++;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public String getTask() {
@@ -29,10 +32,6 @@ public abstract class Task {
         return (isDone ? "*" : " ");
     }
 
-    public static int getNumberOfTasks() {
-        return numberOfTasks;
-    }
-
     public String printStatus() {
         String symbol = getStatusIcon();
         return "[" + symbol + "]";
@@ -44,10 +43,6 @@ public abstract class Task {
 
     public String printTask() {
         return printStatus() + description;
-    }
-
-    public static void decrementNumberOfTask() {
-        numberOfTasks--;
     }
 
     public static String getType() {
@@ -83,6 +78,20 @@ public abstract class Task {
 
     public String toTextFormat() {
         return (isDone ? "1" : "0") + " | " + this.description;
+    }
+
+    /**
+     * Checks whether the description of a task contains a specific keyword.
+     * @param keyword to be checked.
+     * @return whether the keyword is within the description.
+     */
+    public boolean containsKeyword(String keyword) {
+        for (String word : descriptionArray) {
+            if (word.toLowerCase().equals(keyword.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

@@ -54,6 +54,8 @@ public class Parser {
                 return new DeadlineCommand(this.taskList, this.storage, this.ui, userInput);
             case "delete":
                 return new DeleteCommand(this.taskList, this.storage, this.ui, userInput);
+            case "find":
+                return new FindCommand(this.taskList, this.ui, userInput);
             default:
                 throw new DukeIllegalCommandException(keyword);
         }

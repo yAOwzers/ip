@@ -23,7 +23,7 @@ public class Event extends Task {
      * @return Event task in the form of a string.
      */
     public String toTextFormat() {
-        return "E | " + super.toTextFormat() + " | " + description + " | " + at + System.lineSeparator();
+        return "E | " + super.toTextFormat() + " | " + at;
     }
 
     public static String getType(){
@@ -38,11 +38,11 @@ public class Event extends Task {
      *     is found in the input string array.
      */
     public static Event parse(String[] txtArray) throws DukeInvalidUserInputException {
-
-
         String done = txtArray[1].trim();
         String description = txtArray[2].trim();
-        String finalDateTime = "at";
+        String dateTime = txtArray[3];
+        int indexOfDateTime = dateTime.indexOf("/");
+        String finalDateTime = dateTime.substring(indexOfDateTime + 3).trim();
 //        String[] unFormattedDateTime = txtArray[3].trim().split(" ");
 //        String[] formattedDateTime = formatDateTime(unFormattedDateTime);
 //        String finalDateTime = formattedDateTime[0] + " " + formattedDateTime[1] + "-" + formattedDateTime[2];

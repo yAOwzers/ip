@@ -31,8 +31,8 @@ public class Deadline extends Task {
      * Converts the Deadline task into a string to be saved into a text file.
      * @return Deadline task in the form of a string.
      */
-    public String toTxtFormat() {
-        return "D | " + super.toTextFormat() + " | " + description + "|" + by + System.lineSeparator();
+    public String toTextFormat() {
+        return "D | " + super.toTextFormat() + " | " + by;
     }
 
     /**
@@ -42,14 +42,16 @@ public class Deadline extends Task {
      * @throws DukeInvalidUserInputException when an invalid date and time format is found in the input string array.
      */
     public static Deadline parse(String[] txtArray) throws DukeInvalidUserInputException {
-        String done = txtArray[1].trim();
+        String isDoneInteger = txtArray[1].trim();
         String description = txtArray[2].trim();
-        String finalDateTime = "by";
+        String dateTime = txtArray[3].trim();
+        int indexOfDateTime = dateTime.indexOf("/");
+        String finalDateTime = dateTime.substring(indexOfDateTime + 3).trim();
 //        String[] unFormattedDateTime = txtArray[3].trim().split(" ");
 //        String[] formattedDateTime = formatDateTime(unFormattedDateTime);
 //        String finalDateTime = formattedDateTime[0] + " " + formattedDateTime[1];
         Deadline deadline = new Deadline(description, finalDateTime);
-        if (done.equals("1")) {
+        if (isDoneInteger.equals("1")) {
             deadline.markAsDone();
         }
         return deadline;
