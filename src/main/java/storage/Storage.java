@@ -52,8 +52,8 @@ public class Storage {
     public void saveTask(Task task) {
         File file = new File(this.filePath);
         try {
-            file.getParentFile().mkdir(); // create a directory
-            file.createNewFile(); // create .txt file
+                file.getParentFile().mkdir(); // create a directory
+                file.createNewFile(); // create .txt file
 
             // check whether the file exists
             if (file.length() > 0) {
@@ -61,12 +61,12 @@ public class Storage {
                 writeToFile.write(System.lineSeparator() + task.toTextFormat());
                 writeToFile.close();
             } else {
-                FileWriter writeToFile = new FileWriter(file);
+                FileWriter writeToFile = new FileWriter(this.filePath);
                 writeToFile.write(task.toTextFormat());
                 writeToFile.close();
             }
         } catch (IOException e) {
-            System.out.println(Ui.printUnknownError());
+            System.out.println(Ui.printUnknownError() + Ui.lineSeparator());
         }
     }
 
@@ -88,7 +88,7 @@ public class Storage {
                 overwriteFile.close();
             }
         } catch (IOException e) {
-            System.out.println(Ui.printUnknownError());
+            System.out.println(Ui.printUnknownError() + Ui.lineSeparator());
         }
     }
 

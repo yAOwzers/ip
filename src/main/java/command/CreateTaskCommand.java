@@ -52,7 +52,7 @@ public abstract class CreateTaskCommand extends Command {
     protected String addTask(Task newTask) {
         this.taskList.add(newTask);
         this.storage.saveTask(newTask);
-        return this.ui.printAddMessage(newTask) + Ui.lineSeparator()
+        return this.ui.printAddMessage(newTask) + "\n"
                 + this.ui.getNumberOfTaskMessage(this.taskList.getTotalTask());
     }
 

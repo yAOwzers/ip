@@ -1,5 +1,7 @@
 package exceptions;
 
+import ui.Ui;
+
 /**
  * Signals that a given command is not recognised by Duke.
  */

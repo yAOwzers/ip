@@ -59,9 +59,9 @@ public class Ui {
             String getListMessage = "Here are the tasks in your list:";
             String emptyListMessage = "Sorry, your tasks list seems to be empty!";
             if (taskList.size() < 1) {
-                return emptyListMessage;
+                return emptyListMessage + lineSeparator();
             } else {
-                return getListMessage + lineSeparator() + output;
+                return getListMessage + "\n" + output + lineSeparator();
             }
     }
 
@@ -91,8 +91,8 @@ public class Ui {
      * @param newTask that is added to the tasklist.
      */
     public String printAddMessage(Task newTask) {
-        String addMessage = "Got it. I've added this task:\n  " + newTask.printTask();
-        return addMessage + lineSeparator();
+        String addMessage = "Got it. I've added this task:\n  ";
+        return addMessage + newTask.printTask();
     }
 
     /**
@@ -102,7 +102,7 @@ public class Ui {
     public String showMarkDone(Task task) {
         String markDoneMessage = "NOICE! I've marked the following task as done:";
         String taskDetails = task.printTask();
-        return markDoneMessage + taskDetails + lineSeparator();
+        return markDoneMessage + "\n  " + taskDetails + lineSeparator();
     }
 
     /**
@@ -112,7 +112,7 @@ public class Ui {
     public String showDelete(Task task) {
         String deleteMessage = "Okay sure, the following task has been deleted from your list:";
         String taskDetails = task.printTask();
-        return deleteMessage + taskDetails + lineSeparator();
+        return deleteMessage + "\n  " + taskDetails + "\n";
     }
 
     /**

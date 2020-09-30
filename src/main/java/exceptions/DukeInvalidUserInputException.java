@@ -1,6 +1,7 @@
 package exceptions;
 
 import exceptions.DukeException;
+import ui.Ui;
 
 /**
  * Signals that a given user input is invalid and does not fulfill certain constraints.
