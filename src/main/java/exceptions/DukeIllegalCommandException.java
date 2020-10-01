@@ -10,6 +10,6 @@ public class DukeIllegalCommandException extends DukeException {
      * @param command that is not recognised by Duke.
      */
     public DukeIllegalCommandException(String command) {
-        super("I'm terribly sorry to inform you that '" + command + "' is an unrecognizable command.");
+        super("Sorry but '" + command + "' is an unrecognizable command." + Ui.lineSeparator());
     }
 }

@@ -16,7 +16,7 @@ public abstract class Command {
 
     /**
      * Executes the given command.
-     * @throws DukeException when a certain constraint has not been met
+     * @throws DukeException when the User Input does not meet the proper formats.
      */
     public abstract String execute() throws DukeException;
 }

@@ -3,7 +3,7 @@ package command;
 import ui.Ui;
 
 /**
- * Exits from Duke.
+ * Ends the running processes of Duke.
  */
 public class ByeCommand extends Command {
     public ByeCommand(Ui ui) {
@@ -12,8 +12,9 @@ public class ByeCommand extends Command {
 
     @Override
     public String execute() {
+        System.out.println(this.ui.printExit());
         System.exit(0);
-        return this.ui.showExit();
+        return this.ui.printExit();
     }
 
     @Override

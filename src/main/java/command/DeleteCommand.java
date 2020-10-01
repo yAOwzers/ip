@@ -30,23 +30,18 @@ public class DeleteCommand extends Command{
         this.userInput = userInput;
     }
 
-    public DeleteCommand(Ui ui) {
-        super(ui);
-    }
-
     @Override
     public String execute() throws DukeException {
-        //Get number after done keyword
-        String intSubstring = userInput.substring(7);
+        String userInputAfterDone = userInput.substring(7); // retrieves the number after 'done'
         try {
-            int indexNumber = Integer.parseInt(intSubstring);
-            Task deletedTask = this.taskList.delete(indexNumber);
-            this.storage.saveTaskList(this.taskList); //Overwrites current data.txt file
+            int indexOfNumberAfterDone = Integer.parseInt(userInputAfterDone);
+            Task deletedTask = this.taskList.delete(indexOfNumberAfterDone);
+            this.storage.saveTaskList(this.taskList); // saves the file by overwriting the data.txt file
             return this.ui.showDelete(deletedTask)
                     + this.ui.getNumberOfTaskMessage(this.taskList.getTotalTask());
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException e) {
             throw new DukeInvalidUserInputException("Please enter a valid number!");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException e) {
             throw new DukeInvalidUserInputException("Sorry this does not exist!");
         }
     }

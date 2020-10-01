@@ -55,7 +55,7 @@ public class Storage {
                 file.getParentFile().mkdir(); // create a directory
                 file.createNewFile(); // create .txt file
 
-            // check whether the file exists
+            // checks whether the file exists
             if (file.length() > 0) {
                 FileWriter writeToFile = new FileWriter(file, true);
                 writeToFile.write(System.lineSeparator() + task.toTextFormat());
@@ -91,43 +91,5 @@ public class Storage {
             System.out.println(Ui.printUnknownError() + Ui.lineSeparator());
         }
     }
-
-    /**
-     * from previous code
-     */
-/*
-    public static void loadFile() {
-        try {
-            String output;
-            System.out.println("Loaded from previous task list:");
-            output = printFileContents("data.txt");
-            toAppend = true; // if there is an existing file
-
-            String[] prevList;
-            prevList = output.split("\n");
-
-            for (String task : prevList) {
-                String taskType = task.substring(0, 1); // gets the first character
-                String isDoneInteger = task.substring(2, 3);
-                switch (taskType) {
-                    case "T":
-                        Duke.inputTodo(task, isDoneInteger);
-                        break;
-                    case "E":
-                        Duke.inputEvent(task, isDoneInteger);
-                        break;
-                    case "D":
-                        Duke.inputDeadline(task, isDoneInteger);
-                        break;
-                }
-            }
-            Ui.printTaskList();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        Ui.lineSeparator();
-    }
-
- */
 
     }

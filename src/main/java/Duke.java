@@ -5,7 +5,7 @@ import parser.Parser;
 import storage.Storage;
 import task.*;
 import ui.Ui;
-import response.ResponseResult;
+import response.ResultOfResponse;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -32,12 +32,12 @@ public class Duke {
         this.parser = new Parser(this.taskList, this.storage, this.ui);
     }
 
-    public ResponseResult getResponse(String userInput) {
+    public ResultOfResponse getResponse(String userInput) {
         try {
             Command userCommand = this.parser.parseCommand(userInput);
-            return new ResponseResult(false, userCommand.execute());
+            return new ResultOfResponse(false, userCommand.execute());
         } catch (DukeException e) {
-            return new ResponseResult(true, this.ui.showDukeError(e));
+            return new ResultOfResponse(true, this.ui.showDukeError(e));
         }
     }
 

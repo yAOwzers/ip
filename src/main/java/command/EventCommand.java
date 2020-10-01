@@ -8,7 +8,7 @@ import task.Event;
 import task.TaskList;
 import ui.Ui;
 /**
- * Adds an Event task into the current task list of Duke.
+ * Adds an Event task into the task list of Duke.
  */
 public class EventCommand extends CreateTaskCommand {
     /**
@@ -26,24 +26,22 @@ public class EventCommand extends CreateTaskCommand {
     public String execute() throws DukeInvalidUserInputException, DukeIllegalFollowUpCommandException {
         try {
             String userInputWithoutCommand = this.userInput.substring(this.userInput.indexOf(' '));
-            String[] userInputWithoutCommandArr = userInputWithoutCommand.split("/");
-            String description = userInputWithoutCommandArr[0].trim();
+            String[] userInputWithoutCommandArray = userInputWithoutCommand.split("/");
+            String description = userInputWithoutCommandArray[0].trim();
             checkDescription(description, "event");
-            checkFollowUpCommand(userInputWithoutCommandArr, "/at");
-            String followUpCommand = Parser.parseFollowUpCommand(userInputWithoutCommandArr[1]);
+            checkFollowUpCommand(userInputWithoutCommandArray, "/at");
+            String followUpCommand = Parser.parseFollowUpCommand(userInputWithoutCommandArray[1]);
             if (followUpCommand.equals("at")) {
-                String dateTime = userInputWithoutCommand.substring(3);
-//                checkDateTime(userInputWithoutCommandArr[1], "event");
-//                String dateTime = userInputWithoutCommandArr[1]
-//                        .substring(userInputWithoutCommandArr[1].indexOf(" ")).trim();
-                Event newTask = new Event(description, dateTime);
+                checkDateTime(userInputWithoutCommandArray[1], "event");
+                String dateAndTime = userInputWithoutCommandArray[1]
+                        .substring(userInputWithoutCommandArray[1].indexOf(" ")).trim();
+                Event newTask = new Event(description, dateAndTime);
                 return addTask(newTask);
             } else {
                 throw new DukeIllegalFollowUpCommandException("event", followUpCommand);
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeInvalidUserInputException("I'm sorry to inform you that the "
-                    + "description of an event must not be empty.");
+            throw new DukeInvalidUserInputException("The description of the event should not be empty!");
         }
     }
 
