@@ -57,7 +57,7 @@ public class Deadline extends Task {
      * @throws DukeInvalidUserInputException when an invalid date and time format is found in the input string array.
      */
     public static Deadline parse(String[] txtArray) throws DukeInvalidUserInputException {
-        String done = txtArray[1].trim();
+        String isDoneInteger = txtArray[1].trim();
         String description = txtArray[2].trim();
         String[] unformattedAndDateTime = txtArray[3].trim().split(" ");
         String[] formattedDateAndTime = formatDateTime(unformattedAndDateTime);

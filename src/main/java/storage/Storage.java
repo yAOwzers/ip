@@ -58,7 +58,7 @@ public class Storage {
             // checks whether the file exists
             if (file.length() > 0) {
                 FileWriter writeToFile = new FileWriter(file, true);
-                writeToFile.write(System.lineSeparator() + task.toTextFormat());
+                writeToFile.write(System.lineSeparator() +task.toTextFormat());
                 writeToFile.close();
             } else {
                 FileWriter writeToFile = new FileWriter(this.filePath);
@@ -91,5 +91,4 @@ public class Storage {
             System.out.println(Ui.printUnknownError() + Ui.lineSeparator());
         }
     }
-
     }

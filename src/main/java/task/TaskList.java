@@ -52,6 +52,21 @@ public class TaskList {
         return task;
     }
 
+    /**
+     * Finds tasks that contain the input keyword within their descriptions.
+     * @param keyword to find.
+     * @return an array list of tasks that contain the keyword.
+     */
+    public ArrayList<Task> findTasksKeyword(String keyword) {
+        ArrayList<Task> result = new ArrayList<>();
+        for (Task task : this.taskList) {
+            if (task.containsKeyword(keyword)) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
     public ArrayList<Task> getTaskList() {
         return this.taskList;
     }

@@ -71,7 +71,7 @@ public class Ui {
      */
     public String getNumberOfTaskMessage(int i) {
         //If there is only one task, then task will be singular
-        if(Task.getNumberOfTasks() == 1) {
+        if(i == 1) {
            return "Now you have " + i + " task in the list." + lineSeparator();
         }
         else {
@@ -113,6 +113,31 @@ public class Ui {
         String deleteMessage = "Okay sure, the following task has been deleted from your list:";
         String taskDetails = task.printTask();
         return deleteMessage + "\n  " + taskDetails + "\n";
+    }
+
+    /**
+     * Displays the search result of find command.
+     * @param taskList to be searched.
+     * @param userInput find keyword given by user.
+     * @return search result as a String.
+     */
+    public String showFindResults(ArrayList<Task> taskList, String userInput) {
+        String output = "";
+        for (int i = 0; i < taskList.size(); i++) {
+            String currentTask = taskList.get(i).printTask();
+            if (i == taskList.size() - 1) {
+                output = output + (i + 1) + "." + currentTask;
+            } else {
+                output = output + (i + 1) + "." + currentTask + "\n";
+            }
+        }
+        String getListMessage = "Here are the tasks in your list that matches " + "'" + userInput + "'" + ":";
+        String emptyListMessage = "Dang, it seems that there are no tasks that matches " + "'" + userInput + "'" + ".";
+        if (taskList.size() < 1) {
+            return emptyListMessage;
+        } else {
+            return getListMessage + "\n" + output + lineSeparator();
+        }
     }
 
     /**
