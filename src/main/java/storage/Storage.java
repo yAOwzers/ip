@@ -55,7 +55,7 @@ public class Storage {
                 file.getParentFile().mkdir(); // create a directory
                 file.createNewFile(); // create .txt file
 
-            // check whether the file exists
+            // checks whether the file exists
             if (file.length() > 0) {
                 FileWriter writeToFile = new FileWriter(file, true);
                 writeToFile.write(System.lineSeparator() +task.toTextFormat());

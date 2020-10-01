@@ -4,7 +4,7 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Prints the task list currently stored in Duke.
+ * Prints the task list stored in Duke.
  */
 public class ListCommand extends Command {
 

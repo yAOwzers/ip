@@ -8,7 +8,7 @@ import ui.Ui;
 
 /**
  * Abstract extension of the Command class for commands that
- * deal with creating tasks. Contains several methods that such
+ * features creating tasks. Contains several methods that such
  * commands have in common.
  */
 public abstract class CreateTaskCommand extends Command {
@@ -46,6 +46,19 @@ public abstract class CreateTaskCommand extends Command {
         if (withoutCommandArray.length < 2) {
             throw new DukeInvalidUserInputException("It appears you are missing a "
                     + "follow up '" + followUpCommand + "' command.");
+        }
+    }
+
+    /**
+     * Checks whether date time input exists.
+     * @param dateTime to check.
+     * @throws DukeInvalidUserInputException when date and time is missing.
+     */
+    protected static void checkDateTime (String dateTime, String command)
+            throws DukeInvalidUserInputException {
+        if (!dateTime.trim().contains(" ")) {
+            throw new DukeInvalidUserInputException("The date and time is missing" +
+                    " from your " + command + ".");
         }
     }
 

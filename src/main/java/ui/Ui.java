@@ -82,7 +82,7 @@ public class Ui {
     /**
      * Generates and prints the exit message upon exiting Duke.
      */
-    public String showExit() {
+    public String printExit() {
         return "GuuuudBYE. Hope to see you again soon!";
     }
 

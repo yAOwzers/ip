@@ -2,11 +2,18 @@ package task;
 
 import exceptions.DukeInvalidUserInputException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * A specific type of task that contains a description of a task and a specific date and time.
  */
 public class Deadline extends Task {
-    protected String by;
+    private LocalDate date;
+    private LocalTime time;
+    private String by;
 
     /**
      * Constructs a deadline task.
@@ -16,7 +23,15 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) throws DukeInvalidUserInputException {
         super(description);
-        this.by = by;
+        convertDateTime(by);
+    }
+
+    public LocalDate getDate() {
+        return this.date;
+    }
+
+    public LocalTime getTime() {
+        return this.time;
     }
 
     public String printTask() {
@@ -32,7 +47,7 @@ public class Deadline extends Task {
      * @return Deadline task in the form of a string.
      */
     public String toTextFormat() {
-        return "D | " + super.toTextFormat() + " | " + by;
+        return "D | " + super.toTextFormat() + " | " + this.by;
     }
 
     /**
@@ -44,19 +59,55 @@ public class Deadline extends Task {
     public static Deadline parse(String[] txtArray) throws DukeInvalidUserInputException {
         String isDoneInteger = txtArray[1].trim();
         String description = txtArray[2].trim();
-        String dateTime = txtArray[3].trim();
-        int indexOfDateTime = dateTime.indexOf("/");
-        String finalDateTime = dateTime.substring(indexOfDateTime + 3).trim();
-//        String[] unFormattedDateTime = txtArray[3].trim().split(" ");
-//        String[] formattedDateTime = formatDateTime(unFormattedDateTime);
-//        String finalDateTime = formattedDateTime[0] + " " + formattedDateTime[1];
-        Deadline deadline = new Deadline(description, finalDateTime);
-        if (isDoneInteger.equals("1")) {
+        String[] unformattedAndDateTime = txtArray[3].trim().split(" ");
+        String[] formattedDateAndTime = formatDateTime(unformattedAndDateTime);
+        String finalDateAndTime = formattedDateAndTime[0] + " " + formattedDateAndTime[1];
+        Deadline deadline = new Deadline(description, finalDateAndTime);
+        if (done.equals("1")) {
             deadline.markAsDone();
         }
         return deadline;
     }
 
+    /**
+     * Converts the given string into a LocalDateTime to be stored in the given Deadline.
+     * @param dateAndTime to be converted into LocalDateTime.
+     * @throws DukeInvalidUserInputException when an invalid a date time format is used as input.
+     */
+    private void convertDateTime(String dateAndTime) throws DukeInvalidUserInputException {
+        try {
+            String[] dateAndTimeArray = dateAndTime.split(" ");
+            this.date = LocalDate.parse(dateAndTimeArray[0]);
+            this.time =
+                    LocalTime.parse(dateAndTimeArray[1].substring(0, 2) + ":" + dateAndTimeArray[1].substring(2, 4));
+            this.by = this.date.format(DateTimeFormatter.ofPattern("d MMMM yyyy")) + " "
+                    + this.time.format(DateTimeFormatter.ofPattern("hh:mm a"));
+        } catch (DateTimeParseException e) {
+            throw new DukeInvalidUserInputException("You have entered an invalid date and time! "
+                    + "Please follow the format: YYYY-MM-DD hhmm.");
+        }
+    }
+
+    private static String[] formatDateTime(String[] unFormattedDateAndTime) {
+        String[] formattedDateAndTime = new String[3];
+
+        String unformattedDate =
+                unFormattedDateAndTime[0] + " " + unFormattedDateAndTime[1] + " " + unFormattedDateAndTime[2];
+        String unformattedTime =
+                unFormattedDateAndTime[3] + " " + unFormattedDateAndTime[4];
+
+        String formattedDate =
+                LocalDate.parse(unformattedDate, DateTimeFormatter.ofPattern("d MMMM yyyy")).toString();
+        String time =
+                LocalTime.parse(unformattedTime, DateTimeFormatter.ofPattern("hh:mm a")).toString();
+
+        String formattedTime = time.substring(0, time.indexOf(':'))
+                + time.substring(time.indexOf(':') + 1);
+
+        formattedDateAndTime[0] = formattedDate;
+        formattedDateAndTime[1] = formattedTime;
+        return formattedDateAndTime;
+    }
 
     @Override
     public String toString() {
