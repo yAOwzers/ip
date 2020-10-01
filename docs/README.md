@@ -36,7 +36,7 @@ What can I do for you?
 Words in `UPPER_CASE` are the parameters that are by the user.\
 eg. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo math assignment`.
 
-### Add a todo task - **`todo`**
+### **`todo`**
 Adds a todo task to the task list. 
 
 Format: `todo DESCRIPTION`
@@ -158,7 +158,7 @@ Data involved in this application is saved into the hard disk via the `data.txt`
 ## Command Summary
 
 | Action | Format | Examples |
-| ------------- | ------------- |
+| ------------- | ------------- |------------- |
 | Add ToDo | `todo DESCRIPTION` | `todo math assignment` |
 | Add deadline | `deadline DESCRIPTION /by DATE TIME` | `deadline math assignment /by 2020-10-10 2000` |
 | Add event | `event DESCRIPTION /AT DATE START_TIME-END_TIME` | `event project meeting /at 2020-10-10 1900` |
