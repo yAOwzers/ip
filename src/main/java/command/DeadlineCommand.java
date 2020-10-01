@@ -9,7 +9,7 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Adds a Deadline task into the current task list of Duke.
+ * Adds a Deadline task into the task list of Duke.
  */
 public class DeadlineCommand extends CreateTaskCommand {
 
@@ -28,17 +28,16 @@ public class DeadlineCommand extends CreateTaskCommand {
     public String execute() throws DukeInvalidUserInputException, DukeIllegalFollowUpCommandException {
         try {
             String userInputWithoutCommand = this.userInput.substring(this.userInput.indexOf(' '));
-            String[] userInputWithoutCommandArr = userInputWithoutCommand.split("/");
-            String description = userInputWithoutCommandArr[0].trim();
+            String[] userInputWithoutCommandArray = userInputWithoutCommand.split("/");
+            String description = userInputWithoutCommandArray[0].trim();
             checkDescription(description, "deadline");
-            checkFollowUpCommand(userInputWithoutCommandArr, "/by");
-            String followUpCommand = Parser.parseFollowUpCommand(userInputWithoutCommandArr[1]);
+            checkFollowUpCommand(userInputWithoutCommandArray, "/by");
+            String followUpCommand = Parser.parseFollowUpCommand(userInputWithoutCommandArray[1]);
             if (followUpCommand.equals("by")) {
-                String dateTime = userInputWithoutCommand.substring(3);
-//                checkDateTime(userInputWithoutCommandArr[1], "deadline");
-//                String dateTime = userInputWithoutCommandArr[1]
-//                        .substring(userInputWithoutCommandArr[1].indexOf(" ")).trim();
-                Deadline newTask = new Deadline(description, dateTime);
+                checkDateTime(userInputWithoutCommandArray[1], "deadline");
+                String dateAndTime = userInputWithoutCommandArray[1]
+                        .substring(userInputWithoutCommandArray[1].indexOf(" ")).trim();
+                Deadline newTask = new Deadline(description, dateAndTime);
                 return addTask(newTask);
             } else {
                 throw new DukeIllegalFollowUpCommandException("deadline", followUpCommand);

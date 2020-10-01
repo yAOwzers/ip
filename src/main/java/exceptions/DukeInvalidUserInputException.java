@@ -4,13 +4,13 @@ import exceptions.DukeException;
 import ui.Ui;
 
 /**
- * Signals that a given user input is invalid and does not fulfill certain constraints.
+ * Informs a given user input is invalid and does not fulfill the proper formats.
  */
 public class DukeInvalidUserInputException extends DukeException {
     /**
-     * @param msg that contains information related to the failed constraints.
+     * @param message that contains information related to the improper formats.
      */
-    public DukeInvalidUserInputException(String msg) {
-        super(msg);
+    public DukeInvalidUserInputException(String message) {
+        super(message + Ui.lineSeparator());
     }
 }

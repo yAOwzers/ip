@@ -7,11 +7,11 @@ import task.ToDo;
 import ui.Ui;
 
 /**
- * Adds a To_Do task into the current task list of Duke.
+ * Adds a To-Do task into the task list of Duke.
  */
 public class ToDoCommand extends CreateTaskCommand {
     /**
-     * Constructs a to do command.
+     * Constructs a to-do command.
      * @param taskList of Duke.
      * @param storage of Duke.
      * @param ui of Duke.
@@ -29,8 +29,8 @@ public class ToDoCommand extends CreateTaskCommand {
             ToDo newTask = new ToDo(description);
             return addTask(newTask);
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeInvalidUserInputException("I'm sorry to inform you that the "
-                    + "description of a todo must not be empty.");
+            throw new DukeInvalidUserInputException("The description" +
+                    " of a todo is empty. Please fill it up!");
         }
     }
 
