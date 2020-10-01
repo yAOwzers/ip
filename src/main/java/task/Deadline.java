@@ -59,11 +59,11 @@ public class Deadline extends Task {
     public static Deadline parse(String[] txtArray) throws DukeInvalidUserInputException {
         String isDoneInteger = txtArray[1].trim();
         String description = txtArray[2].trim();
-        String[] unformattedAndDateTime = txtArray[3].trim().split(" ");
-        String[] formattedDateAndTime = formatDateTime(unformattedAndDateTime);
+        String[] unformattedDateAndTime = txtArray[3].trim().split(" ");
+        String[] formattedDateAndTime = formatDateAndTime(unformattedDateAndTime);
         String finalDateAndTime = formattedDateAndTime[0] + " " + formattedDateAndTime[1];
         Deadline deadline = new Deadline(description, finalDateAndTime);
-        if (done.equals("1")) {
+        if (isDoneInteger.equals("1")) {
             deadline.markAsDone();
         }
         return deadline;
@@ -88,13 +88,13 @@ public class Deadline extends Task {
         }
     }
 
-    private static String[] formatDateTime(String[] unFormattedDateAndTime) {
+    private static String[] formatDateAndTime(String[] unformattedDateAndTime) {
         String[] formattedDateAndTime = new String[3];
 
         String unformattedDate =
-                unFormattedDateAndTime[0] + " " + unFormattedDateAndTime[1] + " " + unFormattedDateAndTime[2];
+                unformattedDateAndTime[0] + " " + unformattedDateAndTime[1] + " " + unformattedDateAndTime[2];
         String unformattedTime =
-                unFormattedDateAndTime[3] + " " + unFormattedDateAndTime[4];
+                unformattedDateAndTime[3] + " " + unformattedDateAndTime[4];
 
         String formattedDate =
                 LocalDate.parse(unformattedDate, DateTimeFormatter.ofPattern("d MMMM yyyy")).toString();

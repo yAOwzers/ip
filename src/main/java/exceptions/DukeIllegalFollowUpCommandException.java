@@ -1,7 +1,5 @@
 package exceptions;
 
-import ui.Ui;
-
 /**
  * Informs that a given follow up command is incorrect for a given command by Duke.
  */
@@ -13,6 +11,6 @@ public class DukeIllegalFollowUpCommandException extends DukeException {
      */
     public DukeIllegalFollowUpCommandException(String command, String followUpCommand) {
         super("UHm this '" + followUpCommand + "' is an incorrect follow up command to a '"
-                + command + "' command." + Ui.lineSeparator());
+                + command + "' command.");
     }
 }
