@@ -12,6 +12,8 @@ Duke is a Command Line Interface (CLI) desktop application that keeps track of a
   * [Find](#find) 
   * [Mark as Done](#mark-as-done) 
   * [Exit](#exit)
+  * [Save](#save)
+* [Command Summary](#command-summary)
 
 ## Getting Started
 1. Ensure that you have Java `11` or above installed on your device.
@@ -36,7 +38,7 @@ What can I do for you?
 Words in `UPPER_CASE` are the parameters that are by the user.\
 eg. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo math assignment`.
 
-### **`todo`** - Add a todo task
+### **`todo`** 
 Adds a todo task to the task list. 
 
 Format: `todo DESCRIPTION`
@@ -51,7 +53,7 @@ Now you have 1 task in the list.
 -------------------------------------------------------------
 ```
 
-### Add a deadline task - **`deadline`**
+### **`deadline`**
 Adds a deadline task to the task list. A deadline task is a task which requires a description as well as a date and time.
 A `/by` command is placed before the date and time. The format of the date and time is as follows: YYYY-MM-DD hhmm.
 
@@ -67,7 +69,7 @@ Now you have 1 task in the list.
 -------------------------------------------------------------
 ```
 
-### Add an event task - **`event`**
+### **`event`**
 Adds an event task to the task list. An event task is a task which requires a description as well as a date and time.
 A `/at` command is placed before the date and time. The format of the date and time is as follows: YYYY-MM-DD hhmm.
 
@@ -83,7 +85,7 @@ Now you have 2 tasks in the list.
 -------------------------------------------------------------
 ```
 
-### List all tasks - **`list`**
+### **`list`**
 Lists down all the existing task(s) in the task list.
 
 Format: `list`
@@ -97,7 +99,7 @@ Here are the tasks in your list:
 -------------------------------------------------------------
 ```
 
-### Find tasks with a specific keyword - **`find`**
+### **`find`**
 Lists down all the existing tasks that matches the keyword provided by the user from the task list.
 
 Format: `find KEYWORD`
@@ -111,7 +113,7 @@ Here are the tasks in your list that matches 'meeting':
 -------------------------------------------------------------
 ```
 
-### Mark a task as completed - **`done`**
+### **`done`**
 Marks a task in the task list as done. This is indicated by a '\*' symbol inside the second [].
 The index following the `done` command refers to the index of the task in the current task list.
 
@@ -126,7 +128,7 @@ NOICE! I've marked the following task as done:
 -------------------------------------------------------------
 ```
 
-### Remove a task - **`delete`**
+### **`delete`**
 Deletes an existing task from the task list. The index following the `delete` command refers to the index of the task in the current task list.
 
 Format: `delete INDEX`
@@ -141,7 +143,7 @@ Now you have 2 tasks in the list.
 -------------------------------------------------------------
 ```
 
-### Exit the application - **`bye`**
+### **`bye`**
 Exits the application.
 
 Format: `bye`
