@@ -17,7 +17,7 @@ Duke is a Command Line Interface (CLI) desktop application that keeps track of a
 
 ## Getting Started
 1. Ensure that you have Java `11` or above installed on your device.
-2. Download the latest `duke.jar` file from _input url here_
+2. Download the latest `duke.jar` file from: https://github.com/yAOwzers/ip/releases/tag/A-UserGuide
 3. Copy the downloaded `duke.jar` file to your desired folder as the home folder for your program.
 4. Launch the application by entering `jar -jar ip.jar` to run the program. 
 5. A welcome message should appear as displayed below:
