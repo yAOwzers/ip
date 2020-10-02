@@ -39,7 +39,7 @@ Words in `UPPER_CASE` are the parameters that are by the user.\
 eg. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo math assignment`.
 
 ### **`todo`** 
-Adds a todo task to the task list. 
+Adds a todo task to the task list. A todo task is a task which requires a description.
 
 Format: `todo DESCRIPTION`
 
