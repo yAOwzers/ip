@@ -11,7 +11,7 @@ Duke is a Command Line Interface (CLI) desktop application that keeps track of a
   * [List](#list)
   * [Find](#find) 
   * [Mark as Done](#mark-as-done) 
-  * [Exit](#exit)
+  * [Exit](#bye)
   * [Save](#save)
 * [Command Summary](#command-summary)
 
