@@ -1,5 +1,5 @@
 # User Guide
-Duke is a Command Line Interface (CLI) desktop application that keeps track of a user's task list.
+Duke is a Command Line Interface (CLI) desktop application that keeps track of a user's task list. 
 
 ## Table of Contents
 * [Getting Started](#getting-started)
@@ -155,7 +155,7 @@ GuuuudBYE. Hope to see you again soon!
 ```
 
 ### Save 
-Data involved in this application is saved into the hard disk via the `data.txt` file after any command that alters the data is executed. 
+Data involved in this application is saved into the hard disk via the `data.txt` file after any command that alters the data is executed automatically. 
 
 ## Command Summary
 
